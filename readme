@@ -1,0 +1,94 @@
+# Student Score Predictor 📊
+
+A beginner-friendly machine learning project that predicts a student's exam score using study hours, attendance, previous exam performance, and sleep hours.
+
+## ✨ Features
+
+- Predicts exam scores using Linear Regression
+- Accepts student details through a web form
+- Displays predictions in a clean, responsive UI
+- Preserves input values after form submission
+- Built with Python and Flask
+
+## 🛠️ Tech Stack
+
+- Python
+- Pandas
+- Scikit-learn
+- Flask
+- HTML and CSS
+- Joblib
+
+## 📂 Project Structure
+
+```text
+student_score_predictor/
+├── app.py
+├── student_scores_100.csv
+├── student_score_model.pkl
+├── requirements.txt
+├── README.md
+├── .gitignore
+└── templates/
+    └── index.html
+```
+
+## 🚀 Run Locally
+
+### 1. Clone the repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd student_score_predictor
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate it on Windows:
+
+```powershell
+.venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 4. Start the application
+
+```bash
+python app.py
+```
+
+Open http://127.0.0.1:5000 in your browser.
+
+## 🧠 How It Works
+
+1. Student data is stored in a CSV dataset.
+2. A Linear Regression model is trained using selected student features.
+3. The trained model is saved using Joblib.
+4. Flask receives the form inputs and passes them to the model.
+5. The predicted score is displayed on the website.
+
+## ⚠️ Disclaimer
+
+This is an educational project using synthetic sample data. Predictions are for demonstration only and should not be used to evaluate real students.
+
+## 🎯 Learning Outcomes
+
+- Loading and exploring data with Pandas
+- Training a machine learning model
+- Splitting data into training and testing sets
+- Evaluating model performance
+- Saving and loading a trained model
+- Connecting a machine learning model to a Flask web application
+
+## 👨‍💻 Author
+
+Created as a hands-on project to learn Python, machine learning, and web development.

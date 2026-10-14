@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Score Predictor</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Inter, "Segoe UI", sans-serif;
+            min-height: 100vh;
+            background: #f0f7f5;
+            color: #183b3b;
+            padding: 35px 18px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 17px;
+            background: #d5f3e9;
+            font-size: 27px;
+            margin-bottom: 14px;
+        }
+
+        .header h1 {
+            font-size: clamp(27px, 4vw, 38px);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #69807c;
+            line-height: 1.6;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e2eeea;
+            border-radius: 22px;
+            padding: 27px;
+            box-shadow: 0 12px 35px rgba(24, 59, 59, 0.055);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #81918e;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .field {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 650;
+            margin-bottom: 9px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid #dce8e4;
+            background: #fbfdfc;
+            color: #183b3b;
+            padding: 14px 52px 14px 14px;
+            border-radius: 12px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #28a887;
+            box-shadow: 0 0 0 3px rgba(40, 168, 135, 0.12);
+            background: white;
+        }
+
+        .unit {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a9b97;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .hint {
+            display: block;
+            font-size: 11px;
+            color: #8a9b97;
+            margin-top: 7px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            background: #16876e;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 5px;
+        }
+
+        .submit-btn:hover {
+            background: #106e59;
+            transform: translateY(-1px);
+        }
+
+        .result-card {
+            background: linear-gradient(145deg, #183b3b, #245b50);
+            color: white;
+            border-radius: 22px;
+            padding: 27px;
+            min-height: 260px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.045);
+            right: -70px;
+            top: -65px;
+        }
+
+        .result-label {
+            color: #b8d7cf;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 62px;
+            font-weight: 750;
+            letter-spacing: -2px;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .score small {
+            font-size: 19px;
+            font-weight: 500;
+            letter-spacing: 0;
+            color: #c5ded7;
+        }
+
+        .result-message {
+            color: #d0e3dd;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .result-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.16);
+            margin: 25px 0 17px;
+        }
+
+        .result-note {
+            color: #b8d7cf;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .placeholder {
+            min-height: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .placeholder-icon {
+            font-size: 35px;
+            margin-bottom: 14px;
+        }
+
+        .placeholder h3 {
+            font-size: 17px;
+            margin-bottom: 9px;
+        }
+
+        .placeholder p {
+            color: #b8d7cf;
+            max-width: 240px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .error {
+            background: #fff1f0;
+            color: #b42318;
+            border: 1px solid #ffd5d2;
+            border-radius: 11px;
+            padding: 12px 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 17px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #8a9b97;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 24px 14px;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .card, .result-card {
+                padding: 22px;
+            }
+
+            .score {
+                font-size: 54px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <header class="header">
+            <div class="logo">🎓</div>
+            <h1>Student Score Predictor</h1>
+            <p>Explore how study habits and attendance relate to exam performance.</p>
+        </header>
+
+        <div class="layout">
+            <section class="card">
+                <h2>Student details</h2>
+                <p class="subtitle">
+                    Enter the details below to generate a model prediction.
+                    Your values will remain filled in after submission.
+                </p>
+
+                {% if error %}
+                    <div class="error" role="alert">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST" action="/">
+                    <div class="field">
+                        <label for="study_hours">Daily study hours</label>
+                        <div class="input-wrap">
+                            <input
+                                id="study_hours"
+                                name="study_hours"
+                                type="number"
+                                min="0"
+                                max="24"
+                                step="0.5"
+                                placeholder="e.g. 5"
+                                value="{{ request.form.get('study_hours', '') }}"
+                                required
+                            >
+                            <span class="unit">hours</span>
+                        </div>
+                        <span class="hint">Time spent studying each day</span>
+                    </div>
+
+                    <div class="field">
+                        <label for="attendance">Attendance</label>
+                        <div class="input-wrap">
+                            <input
+                                id="attendance"
+                                name="attendance"
+                                type="number"
+                                min="0"
+                                max="100"
+                                step="1"
+                                placeholder="e.g. 85"
+                                value="{{ request.form.get('attendance', '') }}"
+                                required
+                            >
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="previous_score">Previous exam score</label>
+                        <div class="input-wrap">
+                            <input
+                                id="previous_score"
+                                name="previous_score"
+                                type="number"
+                                min="0"
+                                max="100"
+                                step="0.5"
+                                placeholder="e.g. 70"
+                                value="{{ request.form.get('previous_score', '') }}"
+                                required
+                            >
+                            <span class="unit">/ 100</span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="sleep_hours">Daily sleep</label>
+                        <div class="input-wrap">
+                            <input
+                                id="sleep_hours"
+                                name="sleep_hours"
+                                type="number"
+                                min="0"
+                                max="24"
+                                step="0.5"
+                                placeholder="e.g. 8"
+                                value="{{ request.form.get('sleep_hours', '') }}"
+                                required
+                            >
+                            <span class="unit">hours</span>
+                        </div>
+                    </div>
+
+                    <button class="submit-btn" type="submit">
+                        Predict exam score &nbsp; →
+                    </button>
+                </form>
+            </section>
+
+            <section>
+                <div class="result-card" aria-live="polite">
+                    {% if prediction is not none %}
+                        <p class="result-label">YOUR MODEL PREDICTION</p>
+
+                        <div class="score">
+                            {{ "%.1f"|format(prediction) }}
+                            <small>/ 100</small>
+                        </div>
+
+                        <p class="result-message">
+                            Prediction generated successfully using your
+                            entered student details.
+                        </p>
+
+                        <div class="result-divider"></div>
+
+                        <p class="result-note">
+                            This is an estimate from a machine-learning model,
+                            not a guaranteed exam result.
+                        </p>
+                    {% else %}
+                        <div class="placeholder">
+                            <div class="placeholder-icon">📊</div>
+                            <h3>Your result will appear here</h3>
+                            <p>
+                                Fill in the student details and click
+                                Predict exam score to see the result.
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer">
+            Student Score Predictor · Machine Learning Demo<br>
+            Built with Python, Flask and Scikit-learn
+        </footer>
+    </main>
+</body>
+</html>
